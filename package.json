@@ -1,0 +1,17 @@
+{
+  "name": "laundry-microservices",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "dev:auth": "pnpm --filter auth-service dev",
+    "dev:order": "pnpm --filter order-service dev",
+    "dev": "pnpm -r dev",
+    "build": "pnpm -r build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.26.2"
+}
