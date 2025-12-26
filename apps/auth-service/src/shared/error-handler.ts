@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { HttpException } from '../../../../packages/shared-utils/src/http-exception';
+import { HttpException } from '@laundry/shared-utils';
 
 export const errorHandler = (
   err: Error,
