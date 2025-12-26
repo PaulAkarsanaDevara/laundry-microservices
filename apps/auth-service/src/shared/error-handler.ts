@@ -1,12 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { HttpException } from '@laundry/shared-utils';
 
-export const errorHandler = (
-  err: Error,
-  _req: Request,
-  res: Response,
-  _next: NextFunction
-) => {
+export const errorHandler = (err: Error, _req: Request, res: Response, _next: NextFunction) => {
   if (err instanceof HttpException) {
     return res.status(err.status).json({
       message: err.message,

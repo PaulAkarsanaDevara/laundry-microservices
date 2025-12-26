@@ -1,4 +1,5 @@
 import jwt, { JwtPayload, SignOptions } from 'jsonwebtoken';
+
 import { HttpException } from '../../../../packages/shared-utils/src/http-exception';
 
 export interface AuthPayload extends JwtPayload {
@@ -6,17 +7,14 @@ export interface AuthPayload extends JwtPayload {
   role: string;
 }
 
-const JWT_SECRET = process.env.JWT_SECRET || 'rahasiabang@2025' as string;
-const JWT_EXPIRES_IN = Number(process.env.JWT_EXPIRES_IN) || 900  as number;
+const JWT_SECRET = process.env.JWT_SECRET || ('rahasiabang@2025' as string);
+const JWT_EXPIRES_IN = Number(process.env.JWT_EXPIRES_IN) || (900 as number);
 
 if (!JWT_SECRET) {
   throw new Error('JWT_SECRET is not defined');
 }
 
-export const signToken = (
-  payload: JwtPayload,
-  expiresIn: number = JWT_EXPIRES_IN
-): string => {
+export const signToken = (payload: JwtPayload, expiresIn: number = JWT_EXPIRES_IN): string => {
   const options: SignOptions = { expiresIn };
   return jwt.sign(payload, JWT_SECRET, options);
 };

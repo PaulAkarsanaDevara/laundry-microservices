@@ -1,5 +1,6 @@
-import { Router } from "express";
-import { container } from "../../shared/container";
+import { Router } from 'express';
+
+import { container } from '../../shared/container';
 
 const router = Router();
 const controller = container.authController;

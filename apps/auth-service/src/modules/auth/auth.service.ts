@@ -1,8 +1,9 @@
 import { HttpException } from '../../../../../packages/shared-utils/src/http-exception';
-import { comparePassword, hashPassword } from "../../shared/password";
-import { AuthRepository } from "./auth.repository";
-import { IUser } from "./auth.types";
+import { comparePassword, hashPassword } from '../../shared/password';
 import { signToken } from '../../shared/jwt';
+
+import { AuthRepository } from './auth.repository';
+import { IUser } from './auth.types';
 
 export class AuthService {
   constructor(private repository: AuthRepository) {}
@@ -10,9 +11,9 @@ export class AuthService {
   async register(payload: IUser) {
     const { name, username, email, password } = payload;
     const emailExists = await this.repository.findByEmail(email);
-    if(emailExists) throw new HttpException(409, "Email already exists");
+    if (emailExists) throw new HttpException(409, 'Email already exists');
 
-    const hashedPassword = await hashPassword(password) as string;
+    const hashedPassword = (await hashPassword(password)) as string;
 
     return await this.repository.create({
       _id: crypto.randomUUID(),
@@ -21,7 +22,7 @@ export class AuthService {
       email,
       password: hashedPassword,
       role: 'user',
-    })
+    });
   }
 
   async login(email: string, password: string) {
@@ -29,13 +30,13 @@ export class AuthService {
     if (!user) throw new HttpException(401, 'Invalid credentials');
 
     const validPassword = await comparePassword(user.password, password);
-    if(!validPassword) throw new HttpException(401, 'Invalid credentials');
+    if (!validPassword) throw new HttpException(401, 'Invalid credentials');
 
     const token = signToken({
       userId: user._id,
-      role: user.role
+      role: user.role,
     });
 
-    return { token }
+    return { token };
   }
 }

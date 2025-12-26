@@ -1,24 +1,26 @@
-import {Request, Response } from 'express';
-import { AuthService } from './auth.service';
+import { Request, Response } from 'express';
+
 import { verifyToken } from '../../shared/jwt';
+
+import { AuthService } from './auth.service';
 
 export class AuthController {
   constructor(private service: AuthService) {}
 
-  register = async(req: Request, res: Response) => {
+  register = async (req: Request, res: Response) => {
     const user = await this.service.register(req.body);
     res.status(201).json({
       status: true,
-      message: "User register success",
-      data: user
-    })
-  }
+      message: 'User register success',
+      data: user,
+    });
+  };
 
-  login = async(req: Request, res: Response) => {
-    const {email, password } = req.body;
+  login = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
     const result = await this.service.login(email, password);
     res.json(result);
-  }
+  };
 
   verify = async (req: Request, res: Response) => {
     const authHeader = req.headers.authorization;
@@ -35,5 +37,4 @@ export class AuthController {
       user: payload,
     });
   };
-
 }
